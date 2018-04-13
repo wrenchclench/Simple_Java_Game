@@ -3,6 +3,8 @@ package main;
 import javax.swing.*;
 import java.awt.*;
 
+//Setting the size and details of the game window.
+
 public class Window extends Canvas {
 
     public Window (int height, int width, String title, Game game){

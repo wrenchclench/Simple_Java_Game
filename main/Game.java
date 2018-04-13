@@ -5,21 +5,33 @@ import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
 
-    public static final int WIDTH = 640, HEIGHT = WIDTH/12*9;
-
-    public Game(){
-        new Window(WIDTH,HEIGHT, "A Friggin Game", this);
-    }
+    // Setting the size of the window with a 16:9 ratio
+    public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
 
     private Thread thread;
     private boolean running = false;
+    private Handler handler;
 
+    public Game(){
+
+        handler = new Handler();
+        this.addKeyListener(new KeyInput(handler));
+
+        new Window(WIDTH,HEIGHT, "A Friggin Game", this);
+
+        handler.addObject(new Player(WIDTH/2-32,HEIGHT/2-32,ID.Player));
+        handler.addObject(new Player(WIDTH/2+64,HEIGHT/2-32,ID.Player2));
+
+    }
+
+
+    //Start the game
     public synchronized void start(){
         thread = new Thread(this);
         thread.start();
         running = true;
     }
-
+    //Stop the game
     public synchronized void stop(){
         try{
             thread.join();
@@ -28,7 +40,7 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }
     }
-
+    //Run the game. The below code sets the frames per second (FPS) and effectively refreshes the screen at that rate.
     public void run() {
 
         long lastTime = System.nanoTime();
@@ -59,9 +71,11 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void tick(){
+        handler.tick();
 
     }
 
+    // Buffer the FPS so most machines can handle it. About 250 FPS.
     private void render(){
         BufferStrategy bs = this.getBufferStrategy();
         if (bs==null){
@@ -72,6 +86,9 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, WIDTH,HEIGHT );
+
+        handler.render(g);
+
         g.dispose();
         bs.show();
 
