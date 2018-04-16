@@ -8,7 +8,7 @@ public class Handler {
 
     LinkedList<GameObject> object = new LinkedList<GameObject>();
 
-    //Tick for every object in the linkedlist
+    //Tick for every object in the Linkedlist
     public void tick(){
         for (int i= 0; i < object.size(); i++){
             GameObject tempObject = object.get(i);
@@ -17,7 +17,7 @@ public class Handler {
         }
 
     }
-    //Render every object in the linkedlist
+    //Render every object in the Linkedlist
     public void render(Graphics g){
         for (int i= 0; i < object.size(); i++){
             GameObject tempObject = object.get(i);

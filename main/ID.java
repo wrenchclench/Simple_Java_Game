@@ -1,9 +1,9 @@
 package main;
 
-public enum  ID {
-
+public enum ID {
     Player(),
-    Player2(),
-    Enemy();
-
+    BasicEnemy(),
+    FastEnemy(),
+    SmartEnemy(),
+    Trail();
 }
